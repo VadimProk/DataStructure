@@ -1,4 +1,5 @@
 #pragma once
+#include <ostream>
 #include "../DataStructure/SingleNode.h"
 
 using namespace std;
@@ -31,6 +32,27 @@ public:
         }
         current->next = std::move(newNode);
         size++;
+    }
+
+    void removeFirst() {
+        if (!head) throw std::out_of_range("Список пустий!");
+        head = std::move(head->next);
+        size--;
+    }
+
+    void removeLast() {
+        if (!head) throw std::out_of_range("Список пустий!");
+        if (size == 1) {
+            head.reset();
+            size--;
+            return;
+        }
+        single_node::Node<T>* current = head.get();
+        while (current->next->next) {
+            current = current->next.get();
+        }
+        current->next.reset();
+        size--;
     }
 };
 
