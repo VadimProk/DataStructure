@@ -39,5 +39,31 @@ public:
         }
         size++;
     }
+
+    void removeFirst() {
+        if (!head) throw std::out_of_range("List is empty!");
+
+        if (head == tail) {
+            head = tail = nullptr;
+        }
+        else {
+            head = head->next;
+            head->prev.reset();
+        }
+        size--;
+    }
+
+    void removeLast() {
+        if (!tail) throw std::out_of_range("List is empty!");
+
+        if (head == tail) {
+            head = tail = nullptr;
+        }
+        else {
+            tail = tail->prev.lock();
+            tail->next.reset();
+        }
+        size--;
+    }
 };
 
