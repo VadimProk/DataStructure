@@ -105,5 +105,30 @@ public:
         previous->next = std::move(previous->next->next);
         size--;
     }
+
+    int getSize() const { return size; }
+
+    bool isEmpty() const { return size == 0; }
+
+    int find(T search) {
+        single_node::Node<T>* current = head.get();
+        int index = 0;
+        while (current) {
+            if (search == current->data) return index;
+            current = current->next.get();
+            index++;
+        }
+        return -1;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const SinglyLinkedList& list) {
+        single_node::Node<T>* current = list.head.get();
+        while (current) {
+            os << current->data << " ";
+            current = current->next.get();
+        }
+        os << std::endl;
+        return os;
+    }
 };
 
