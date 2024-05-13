@@ -65,5 +65,47 @@ public:
         }
         size--;
     }
+
+    void insertAtIndex(int index, T data) {
+        if (index == 0) {
+            insertAtBeginning(data);
+            return;
+        }
+        if (index == size) {
+            insertAtEnd(data);
+            return;
+        }
+        if (index < 0 || index > size - 1) throw std::out_of_range("Індекс виходить за межі діапазону");
+        std::shared_ptr<double_node::Node<T>> newNode = std::make_shared<double_node::Node<T>>(data);
+        std::shared_ptr<double_node::Node<T>> previous = head;
+        for (int i = 1; i <= index - 1; i++) {
+            previous = previous->next;
+        }
+        newNode->next = previous->next;
+        newNode->prev = previous;
+        previous->next->prev = newNode;
+        previous->next = newNode;
+        size++;
+    }
+
+    void removeAtIndex(int index) {
+        if (index < 0 || index > size - 1) throw std::out_of_range("Індекс виходить за межі діапазону");
+
+        if (index == 0) {
+            removeFirst();
+            return;
+        }
+        if (index == size - 1) {
+            removeLast();
+            return;
+        }
+        double_node::Node<T>* current = head.get();
+        for (int i = 1; i <= index; i++) {
+            current = current->next.get();
+        }
+        current->prev.lock()->next = current->next;
+        current->next->prev = current->prev;
+        size--;
+    }
 };
 
