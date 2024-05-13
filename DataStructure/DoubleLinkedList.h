@@ -66,6 +66,18 @@ public:
         size--;
     }
 
+    T operator[](int index) {
+        if (index < 0 || index > size - 1) throw std::out_of_range("Index is out of range");
+
+        double_node::Node<T>* current = head.get();
+
+        for (int i = 1; i <= index; i++) {
+            current = current->next.get();
+        }
+
+        return current->data;
+    }
+
     void insertAtIndex(int index, T data) {
         if (index == 0) {
             insertAtBeginning(data);
